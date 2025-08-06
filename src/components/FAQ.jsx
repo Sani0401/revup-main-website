@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import ContactForm from './ContactForm';
 import './FAQ.css';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const faqs = [
     {
@@ -37,45 +39,57 @@ const FAQ = () => {
   };
 
   return (
-    <section className="section section-dark">
-      <div className="container">
-        <div className="section-header">
-          <h2 className="section-title">
-            Frequently asked <span className="gradient-text">questions</span>
-          </h2>
-          <p className="section-subtitle">
-            Everything you need to know about RevUp. Can't find what you're looking for? 
-            Contact our support team.
-          </p>
-        </div>
+    <>
+      <section className="section section-dark">
+        <div className="container">
+          <div className="section-header">
+            <h2 className="section-title">
+              Frequently asked <span className="gradient-text">questions</span>
+            </h2>
+            <p className="section-subtitle">
+              Everything you need to know about RevUp. Can't find what you're looking for? 
+              Contact our support team.
+            </p>
+          </div>
 
-        <div className="faq-container">
-          {faqs.map((faq, index) => (
-            <div key={index} className="faq-item">
-              <button 
-                className="faq-question"
-                onClick={() => toggleFAQ(index)}
-              >
-                <span>{faq.question}</span>
-                {openIndex === index ? 
-                  <ChevronUp size={20} /> : 
-                  <ChevronDown size={20} />
-                }
-              </button>
-              <div className={`faq-answer ${openIndex === index ? 'open' : ''}`}>
-                <p>{faq.answer}</p>
+          <div className="faq-container">
+            {faqs.map((faq, index) => (
+              <div key={index} className="faq-item">
+                <button 
+                  className="faq-question"
+                  onClick={() => toggleFAQ(index)}
+                >
+                  <span>{faq.question}</span>
+                  {openIndex === index ? 
+                    <ChevronUp size={20} /> : 
+                    <ChevronDown size={20} />
+                  }
+                </button>
+                <div className={`faq-answer ${openIndex === index ? 'open' : ''}`}>
+                  <p>{faq.answer}</p>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="faq-cta">
-          <h3>Still have questions?</h3>
-          <p>Our team is here to help you get the most out of RevUp.</p>
-          <button className="btn btn-primary">Contact Support</button>
+          <div className="faq-cta">
+            <h3>Still have questions?</h3>
+            <p>Our team is here to help you get the most out of RevUp.</p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => setIsContactModalOpen(true)}
+            >
+              Contact Support
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <ContactForm 
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+      />
+    </>
   );
 };
 
